@@ -11,7 +11,7 @@ import SwiftUI
 struct AcidDrumzApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            DrumsView()
         }
     }
 }

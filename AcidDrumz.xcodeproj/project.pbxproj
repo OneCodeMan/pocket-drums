@@ -29,9 +29,22 @@
 		1626ECCB2E0DEB28001760F1 /* AcidDrumzUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AcidDrumzUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		162684D92E0E15300055A27D /* Exceptions for "AcidDrumz" folder in "AcidDrumz" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Assets.xcassets,
+			);
+			target = 1626ECB02E0DEB1E001760F1 /* AcidDrumz */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		1626ECB32E0DEB1E001760F1 /* AcidDrumz */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				162684D92E0E15300055A27D /* Exceptions for "AcidDrumz" folder in "AcidDrumz" target */,
+			);
 			path = AcidDrumz;
 			sourceTree = "<group>";
 		};
