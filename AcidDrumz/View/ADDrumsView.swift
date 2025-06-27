@@ -26,6 +26,35 @@ struct DrumsView: View {
         ADOneShotSound(name: "mid conga", fileString: "tr-808-mid-conga-01"),
     ]
     
+    let data2 = [
+        ADOneShotSound(name: "kick", fileString: "set2-kick01"),
+        ADOneShotSound(name: "snare", fileString: "set2-snare01"),
+        ADOneShotSound(name: "chat", fileString: "set2-chat01"),
+        ADOneShotSound(name: "ohat", fileString: "set2-ohat01"),
+        ADOneShotSound(name: "crash", fileString: "set2-crash01"),
+        ADOneShotSound(name: "low tom", fileString: "set2-tom01"),
+        ADOneShotSound(name: "mid tom", fileString: "set2-tom02"),
+        ADOneShotSound(name: "high tom", fileString: "set2-tom03"),
+        ADOneShotSound(name: "tambourine", fileString: "set2-tamb01"),
+        ADOneShotSound(name: "rattle", fileString: "set2-rattle"),
+        
+    ]
+    
+    let data3 = [
+        ADOneShotSound(name: "kick", fileString: "Elka80-Kick"),
+        ADOneShotSound(name: "snare", fileString: "Elka80-Snare"),
+        ADOneShotSound(name: "chat", fileString: "Elka80-ClosedHat"),
+        ADOneShotSound(name: "ohat", fileString: "Elka80-OpenHat"),
+        ADOneShotSound(name: "crash", fileString: "Elka80-Crash"),
+        ADOneShotSound(name: "low tom", fileString: "Elka80-LowTom"),
+        ADOneShotSound(name: "mid tom", fileString: "Elka80-MidTom"),
+        ADOneShotSound(name: "high tom", fileString: "Elka80-HiTom"),
+        ADOneShotSound(name: "triangle", fileString: "Elka80-LongTriangle"),
+        ADOneShotSound(name: "shaker", fileString: "Elka80-Shaker2"),
+        ADOneShotSound(name: "guiro", fileString: "Elka80-Guiro"),
+        
+    ]
+    
     let data_alt = [
         ADOneShotSound(name: "kick 1", fileString: "moog_kick_01"),
         ADOneShotSound(name: "kick 2", fileString: "moog_kick_02"),
@@ -46,7 +75,6 @@ struct DrumsView: View {
         ADOneShotSound(name: "glitch 2", fileString: "glitch2"),
         ADOneShotSound(name: "laser", fileString: "laser1"),
         ADOneShotSound(name: "synth dub", fileString: "synthdub"),
-        
     ]
 
        let columns = [
@@ -55,9 +83,8 @@ struct DrumsView: View {
 
        var body: some View {
            ScrollView {
-               Spacer()
                LazyVGrid(columns: columns, spacing: 10) {
-                   ForEach(data_alt, id: \.self) { item in
+                   ForEach(data3, id: \.self) { item in
                        Button(action: {
                            tappedItem = item
                            playSound(soundName: item.fileString)
@@ -77,6 +104,7 @@ struct DrumsView: View {
                    }
                }
                .padding(.horizontal)
+               .padding(.top, 20)
                
                Spacer()
                
@@ -100,12 +128,12 @@ struct DrumsView: View {
                        }
                    }
                }
+               .padding(.top, 12)
                .padding(.horizontal)
                
                
            }
-           .frame(maxHeight: .infinity)
-           .padding(.top, 12)
+           .padding(12)
        }
     
     func playSound(soundName: String, soundVol: Float = 1.0) {
