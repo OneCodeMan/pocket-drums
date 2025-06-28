@@ -6,10 +6,12 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct ADKitManager {
     
     // MARK: kits
+    static let kits = [tr808_kit, decentkit_kit, elka80_kit, moog_kit]
     static let tr808_kit: ADSoundPack = ADSoundPack(sounds: tr808_sounds, title: "TR 808", internalTitle: "tr808")
     static let decentkit_kit: ADSoundPack = ADSoundPack(sounds: decentkit_sounds, title: "Default", internalTitle: "def1")
     static let elka80_kit: ADSoundPack = ADSoundPack(sounds: elka80_sounds, title: "Elka 80", internalTitle: "elka80")

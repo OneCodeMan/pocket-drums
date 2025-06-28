@@ -12,6 +12,7 @@ import AVFoundation
 struct DrumsView: View {
     @State var player: AVAudioPlayer?
     
+    @State var selectedKit: ADSoundPack
     @State private var tappedItem: ADOneShotSound?
 
    let columns = [
@@ -21,7 +22,7 @@ struct DrumsView: View {
    var body: some View {
        ScrollView {
            LazyVGrid(columns: columns, spacing: 10) {
-               ForEach(ADKitManager.tr808_kit.sounds, id: \.self) { item in
+               ForEach(selectedKit.sounds, id: \.self) { item in
                    Button(action: {
                        tappedItem = item
                        playSound(soundName: item.fileString)
@@ -43,7 +44,7 @@ struct DrumsView: View {
            .padding(.horizontal)
            .padding(.top, 20)
            
-           Spacer()
+           Divider()
            
            LazyVGrid(columns: columns, spacing: 10) {
                ForEach(ADKitManager.fx_pack_01, id: \.self) { item in
@@ -67,6 +68,13 @@ struct DrumsView: View {
            }
            .padding(.top, 12)
            .padding(.horizontal)
+           
+           
+           // MARK: Menu TODO
+           
+           Menu("Select Kit") {
+               // List of drum kits from ADKitManager.
+           }
            
            
        }

@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct AcidDrumzApp: App {
+    @AppStorage("currentKitID") var currentKitID: String = "tr808"
+    
     var body: some Scene {
         WindowGroup {
-            DrumsView()
+            DrumsView(selectedKit: ADKitManager.tr808_kit)
         }
     }
 }
