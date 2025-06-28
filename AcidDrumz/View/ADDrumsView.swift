@@ -10,9 +10,12 @@ import SwiftUI
 import AVFoundation
 
 struct DrumsView: View {
+    @AppStorage("selectedKitID") var selectedKitID: String?
+    
     @State var player: AVAudioPlayer?
     
-    @State var selectedKit: ADSoundPack
+    @State var selectedKitString: String
+    @State private var selectedKit: ADSoundPack = ADKitManager.tr808_kit
     @State private var tappedItem: ADOneShotSound?
 
    let columns = [
@@ -70,15 +73,30 @@ struct DrumsView: View {
            .padding(.horizontal)
            
            
-           // MARK: Menu TODO
-           
-           Menu("Select Kit") {
-               // List of drum kits from ADKitManager.
+           // MARK: Menu
+           VStack {
+               // this is where the last kit is selected for appstorage
+               Picker("Select Kit", selection: $selectedKit) {
+                   ForEach(ADKitManager.kits, id: \.self) {
+                       Text($0.title)
+                   }
+               }
+               .pickerStyle(.menu)
+
+               Text("Selected Kit: \(selectedKit.title)")
            }
            
            
        }
        .padding(12)
+       .task {
+           // set selectedkit based off of appstorage if possible.
+           selectedKit = ADKitManager.kits.first(where: { $0.internalTitle == selectedKitString }) ?? ADKitManager.elka80_kit
+       }
+       .onDisappear {
+           // update appstorage with the last selected kit
+           selectedKitID = selectedKit.internalTitle
+       }
    }
     
     func playSound(soundName: String, soundVol: Float = 1.0) {
