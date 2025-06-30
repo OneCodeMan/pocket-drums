@@ -13,7 +13,7 @@ struct AcidDrumzApp: App {
     
     var body: some Scene {
         WindowGroup {
-            DrumsView(selectedKitString: selectedKitID ?? "tr808")
+            SquarePusherView(selectedKitString: selectedKitID ?? "tr808")
         }
     }
 }

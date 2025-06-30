@@ -9,7 +9,7 @@
 import SwiftUI
 import AVFoundation
 
-struct DrumsView: View {
+struct SquarePusherView: View {
     @AppStorage("selectedKitID") var selectedKitID: String?
     
     @State var player: AVAudioPlayer?

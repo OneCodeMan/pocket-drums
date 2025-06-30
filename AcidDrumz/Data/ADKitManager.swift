@@ -11,11 +11,12 @@ import SwiftUI
 struct ADKitManager {
     
     // MARK: kits
-    static let kits = [tr808_kit, decentkit_kit, elka80_kit, moog_kit]
+    static let kits = [tr808_kit, decentkit_kit, elka80_kit, moog_kit, basic_kit]
     static let tr808_kit: ADSoundPack = ADSoundPack(sounds: tr808_sounds, title: "TR 808", internalTitle: "tr808")
     static let decentkit_kit: ADSoundPack = ADSoundPack(sounds: decentkit_sounds, title: "Default", internalTitle: "def1")
     static let elka80_kit: ADSoundPack = ADSoundPack(sounds: elka80_sounds, title: "Elka 80", internalTitle: "elka80")
     static let moog_kit: ADSoundPack = ADSoundPack(sounds: moog_kit_sounds, title: "Moog Acid", internalTitle: "moogacid")
+    static let basic_kit: ADSoundPack = ADSoundPack(sounds: basic_kit_sounds, title: "Default2", internalTitle: "default2")
     
     // MARK: sounds
     static let tr808_sounds = [
@@ -71,6 +72,22 @@ struct ADKitManager {
         ADOneShotSound(name: "chat", fileString: "moog_chat_01"),
         ADOneShotSound(name: "rim", fileString: "moog_prc_01"),
         
+    ]
+    
+    static let basic_kit_sounds = [
+        ADOneShotSound(name: "kick 1", fileString: "set2-kick01"),
+        ADOneShotSound(name: "kick 2", fileString: "set2-kick02"),
+        
+        ADOneShotSound(name: "snare 1", fileString: "set2-snare01"),
+        ADOneShotSound(name: "snare 2", fileString: "set2-snare02"),
+        ADOneShotSound(name: "ohat", fileString: "set2-ohat01"),
+        ADOneShotSound(name: "chat", fileString: "set2-chat01"),
+        ADOneShotSound(name: "rattle", fileString: "set2-rattle"),
+        
+        ADOneShotSound(name: "tambourine", fileString: "set2-tamb01"),
+        ADOneShotSound(name: "low tom", fileString: "set2-tom01"),
+        ADOneShotSound(name: "mid tom", fileString: "set2-tom02"),
+        ADOneShotSound(name: "hi tom", fileString: "set2-tom03"),
     ]
     
     // MARK: fx pack
