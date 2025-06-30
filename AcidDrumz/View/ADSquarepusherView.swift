@@ -14,7 +14,6 @@ struct ADSquarePusherView: View {
     
     @State var selectedKitString: String
     @State private var selectedKit: ADSoundPack = ADKitManager.tr808_kit
-    @State private var tappedItem: ADOneShotSound?
 
    let columns = [
        GridItem(.adaptive(minimum: 80))
@@ -24,25 +23,8 @@ struct ADSquarePusherView: View {
        ScrollView {
            LazyVGrid(columns: columns, spacing: 10) {
                ForEach(selectedKit.sounds, id: \.self) { item in
+                   ADOneShotView(item: item)
                    
-                   // TODO: refactor this into its own view
-                   // make the "background tapped state" a state variable
-                   Button(action: {
-                       tappedItem = item
-                       playSound(soundName: item.fileString)
-
-                       // Reset the tapped state after a short delay
-                       DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                           tappedItem = nil
-                       }
-                   }) {
-                       Text(item.name)
-                           .frame(minWidth: 40, minHeight: 40)
-                           .padding()
-                           .background(tappedItem == item ? Color.purple : Color.blue)
-                           .foregroundColor(.white)
-                           .cornerRadius(8)
-                   }
                }
            }
            .padding(.horizontal)
@@ -52,22 +34,23 @@ struct ADSquarePusherView: View {
            
            LazyVGrid(columns: columns, spacing: 10) {
                ForEach(ADKitManager.fx_pack_01, id: \.self) { item in
-                   Button(action: {
-                       tappedItem = item
-                       playSound(soundName: item.fileString)
-
-                       // Reset the tapped state after a short delay
-                       DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                           tappedItem = nil
-                       }
-                   }) {
-                       Text(item.name)
-                           .frame(minWidth: 40, minHeight: 40)
-                           .padding()
-                           .background(tappedItem == item ? Color.green : Color.blue)
-                           .foregroundColor(.white)
-                           .cornerRadius(8)
-                   }
+                   ADOneShotView(item: item)
+//                   Button(action: {
+//                       tappedItem = item
+//                       playSound(soundName: item.fileString)
+//
+//                       // Reset the tapped state after a short delay
+//                       DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+//                           tappedItem = nil
+//                       }
+//                   }) {
+//                       Text(item.name)
+//                           .frame(minWidth: 40, minHeight: 40)
+//                           .padding()
+//                           .background(tappedItem == item ? Color.green : Color.blue)
+//                           .foregroundColor(.white)
+//                           .cornerRadius(8)
+//                   }
                }
            }
            .padding(.top, 12)
