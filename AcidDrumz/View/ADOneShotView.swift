@@ -14,7 +14,6 @@ struct ADOneShotView: View {
     
     @State var item: ADOneShotSound
     
-    @State var selectedColour: Color = Color.ADOneShotGambogeTapState
     @State var isSelected: Bool = false
     
     var body: some View {
@@ -32,7 +31,7 @@ struct ADOneShotView: View {
                 Text(item.name)
                     .frame(minWidth: 40, minHeight: 40)
                     .padding()
-                    .background(isSelected ? selectedColour : Color.blue)
+                    .background(isSelected ? item.activeColour : Color.blue)
                     .foregroundColor(.white)
                     .cornerRadius(8)
             }

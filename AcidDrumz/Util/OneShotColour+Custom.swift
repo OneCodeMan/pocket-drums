@@ -25,4 +25,6 @@ extension Color {
     
     static let ADOneShotHangoverPinkTapState: Color = Color(red: 229.0 / 255.0, green: 195.0 / 255.0, blue: 209.0 / 255.0)
     
+    static let ADOneShotInactiveColourSquare: Color = .blue // TODO
+    
 }
