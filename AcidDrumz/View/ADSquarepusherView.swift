@@ -4,12 +4,10 @@
 //
 //  Created by Dave Gumba on 2025-06-26.
 //
-
-// todo: play sound on tap
 import SwiftUI
 import AVFoundation
 
-struct SquarePusherView: View {
+struct ADSquarePusherView: View {
     @AppStorage("selectedKitID") var selectedKitID: String?
     
     @State var player: AVAudioPlayer?
@@ -26,6 +24,9 @@ struct SquarePusherView: View {
        ScrollView {
            LazyVGrid(columns: columns, spacing: 10) {
                ForEach(selectedKit.sounds, id: \.self) { item in
+                   
+                   // TODO: refactor this into its own view
+                   // make the "background tapped state" a state variable
                    Button(action: {
                        tappedItem = item
                        playSound(soundName: item.fileString)

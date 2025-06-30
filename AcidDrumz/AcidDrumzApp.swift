@@ -9,11 +9,9 @@ import SwiftUI
 
 @main
 struct AcidDrumzApp: App {
-    @AppStorage("selectedKitID") var selectedKitID: String?
-    
     var body: some Scene {
         WindowGroup {
-            SquarePusherView(selectedKitString: selectedKitID ?? "tr808")
+            ADModeView()
         }
     }
 }
