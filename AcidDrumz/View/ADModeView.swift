@@ -16,21 +16,49 @@ struct ADModeView: View {
     @AppStorage("selectedKitID") var selectedKitID: String?
     
     var body: some View {
-        ScrollView {
-            switch currentModeOnScreen {
-            case .ADSquarepusherMode:
-                ADSquarePusherView(selectedKitString: selectedKitID ?? "tr808")
-            case .ADAutechreMode:
-                ADAutechreView()
+        NavigationStack {
+            ScrollView {
+                switch currentModeOnScreen {
+                case .ADSquarepusherMode:
+                    ADSquarePusherView(selectedKitString: selectedKitID ?? "tr808")
+                case .ADAutechreMode:
+                    ADAutechreView()
+                }
             }
-        }
-        .padding(12)
-        .task {
-            // set selectedkit based off of appstorage if possible.
-           
-        }
-        .onDisappear {
-           
+            .navigationTitle(currentModeOnScreen.description)
+            .toolbar {
+//                // This is setting up the item as the primary action for this toolbar
+//                ToolbarItem(placement: .primaryAction) {
+//                    Button("New", systemImage: "plus") {
+//                        // TODO: - Do something
+//                    }
+//                }
+                // This is setting up the item specifically in the position at the top left corner
+                ToolbarItem(placement: .topBarLeading) {
+                    Menu("More", systemImage: "ellipsis") {
+                        Button("Autechre Mode", systemImage: "pencil") {
+                            if currentModeOnScreen != .ADAutechreMode {
+                                currentModeOnScreen = .ADAutechreMode
+                            }
+                            
+                        }
+                        
+                        Button("Squarepusher Mode", systemImage: "shield.pattern.checkered") {
+                            if currentModeOnScreen != .ADSquarepusherMode {
+                                currentModeOnScreen = .ADSquarepusherMode
+                            }
+                        }
+                    }
+                }
+            }
+            .padding(12)
+            .task {
+                // set selectedkit based off of appstorage if possible.
+                
+            }
+            .onDisappear {
+                
+            }
         }
     }
     

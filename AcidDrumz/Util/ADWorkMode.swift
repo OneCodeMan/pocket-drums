@@ -7,7 +7,17 @@
 
 import Foundation
 
-enum ADWorkMode {
+enum ADWorkMode: CustomStringConvertible {
     case ADSquarepusherMode
     case ADAutechreMode
+    
+    var description: String {
+        switch self {
+        case .ADSquarepusherMode:
+            return "Squarepusher"
+        case .ADAutechreMode:
+            return "Autechr"
+        }
+    }
+    
 }
