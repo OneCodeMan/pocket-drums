@@ -18,52 +18,80 @@ struct ADAutechreView: View {
     let columns = Array(repeating: GridItem(.flexible()), count: 16)
     let rows = Array(repeating: GridItem(.fixed(30)), count: 6)
     
+    @State var bpm: Double = 128.0
+    
     var body: some View {
-        Grid(alignment: .bottom, horizontalSpacing: 5, verticalSpacing: 5) {
-            GridRow {
-                ForEach(0..<17) { i in
-                    Text("\(i)")
-                        .opacity(i > 0 ? 1.0 : 0.0)
-                }
-            }
-            ForEach(0..<6) { row in
+        Group {
+            // MARK: Cook grid
+            Grid(alignment: .bottom, horizontalSpacing: 5, verticalSpacing: 5) {
                 GridRow {
-                    // very first column is the label
-                    Text(labels[row])
-                        .gridCellAnchor(.center)
-                    ForEach(1..<17) {
-                        _ in
-                        let currentRow = labels[row]
-                        if currentRow == "BD" {
-                            ADAutechreOneSquare(squareType: ADAutechreSquareType.kick)
-                        }
-                        
-                        if currentRow == "SN" {
-                            ADAutechreOneSquare(squareType: ADAutechreSquareType.snare)
-                        }
-                        
-                        if currentRow == "CH" {
-                            ADAutechreOneSquare(squareType: ADAutechreSquareType.hat)
-                        }
-                        
-                        if currentRow == "OH" {
-                            ADAutechreOneSquare(squareType: ADAutechreSquareType.hat)
-                        }
-                        
-                        if currentRow == "T" {
-                            ADAutechreOneSquare(squareType: ADAutechreSquareType.tom)
-                        }
-                        
-                        if currentRow == "SH" {
-                            ADAutechreOneSquare(squareType: ADAutechreSquareType.perc)
-                        }
-                        
+                    ForEach(0..<17) { i in
+                        Text("\(i)")
+                            .opacity(i > 0 ? 1.0 : 0.0)
                     }
                 }
+                ForEach(0..<6) { row in
+                    GridRow {
+                        // very first column is the label
+                        Text(labels[row])
+                            .gridCellAnchor(.center)
+                        ForEach(1..<17) {
+                            _ in
+                            let currentRow = labels[row]
+                            if currentRow == "BD" {
+                                ADAutechreOneSquare(squareType: ADAutechreSquareType.kick)
+                            }
+                            
+                            if currentRow == "SN" {
+                                ADAutechreOneSquare(squareType: ADAutechreSquareType.snare)
+                            }
+                            
+                            if currentRow == "CH" {
+                                ADAutechreOneSquare(squareType: ADAutechreSquareType.hat)
+                            }
+                            
+                            if currentRow == "OH" {
+                                ADAutechreOneSquare(squareType: ADAutechreSquareType.hat)
+                            }
+                            
+                            if currentRow == "T" {
+                                ADAutechreOneSquare(squareType: ADAutechreSquareType.tom)
+                            }
+                            
+                            if currentRow == "SH" {
+                                ADAutechreOneSquare(squareType: ADAutechreSquareType.perc)
+                            }
+                            
+                        }
+                    }
+                }
+                
+                
             }
             
-            
+            // MARK: Buttons
+            Group {
+                HStack {
+                    Button {
+                        print("play pressed")
+                    } label: {
+                        Image(systemName: "play.fill")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 25, height: 25)
+                            .foregroundStyle(Color.ADAutechrePlayButton)
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .buttonBorderShape(.roundedRectangle)
+                    .tint(.clear)
+                    
+                    Text("BPM: \(bpm, specifier: "%.2f")")
+                }
+                
+            }
+            .padding()
         }
+        
     }
 }
 
@@ -89,7 +117,7 @@ struct ADAutechreOneSquare: View {
             .fill(isSelected ? squareColour : Color.ADAutechreModeInactiveSquare)
             .frame(width: 35, height: 35)
             .onTapGesture {
-                print("tapped")
+                print("tapped \(squareType.description)")
                 isSelected.toggle()
             }
             .task {
