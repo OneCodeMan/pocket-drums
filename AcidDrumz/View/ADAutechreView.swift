@@ -20,7 +20,13 @@ struct ADAutechreView: View {
     
     var body: some View {
         Grid(alignment: .bottom, horizontalSpacing: 5, verticalSpacing: 5) {
-            ForEach(0..<rows.count) { row in
+            GridRow {
+                ForEach(0..<17) { i in
+                    Text("\(i)")
+                        .opacity(i > 0 ? 1.0 : 0.0)
+                }
+            }
+            ForEach(0..<6) { row in
                 GridRow {
                     // very first column is the label
                     Text(labels[row])
@@ -69,11 +75,11 @@ struct ADAutechreOneSquare: View {
     @State var squareColour: Color = .brown
     
     var squareTypeToActiveColourMap: [ADAutechreSquareType: Color] = [
-        ADAutechreSquareType.kick: Color.ADOneShotHangoverPinkTapState,
-        ADAutechreSquareType.snare: Color.ADOneShotGreenTapState,
-        ADAutechreSquareType.hat: Color.ADOneShotGambogeTapState,
-        ADAutechreSquareType.tom: Color.ADOneShotSoirBleuTapState,
-        ADAutechreSquareType.perc: Color.ADOneShotDiscoVioletTapState,
+        ADAutechreSquareType.kick: Color.ADAutechreKickButton,
+        ADAutechreSquareType.snare: Color.ADAutechreSnareButton,
+        ADAutechreSquareType.hat: Color.ADAutechreHatButton,
+        ADAutechreSquareType.tom: Color.ADAutechreTomButton,
+        ADAutechreSquareType.perc: Color.ADAutechrePercButton,
         ADAutechreSquareType.ride: Color.brown,
         ADAutechreSquareType.unknown: Color.brown,
     ]
