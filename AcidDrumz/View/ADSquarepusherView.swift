@@ -63,37 +63,41 @@ struct ADSquarePusherView: View {
                // MARK: Record
                Group {
                    HStack {
-                       Button {
-                           print("record")
-                           Task {
-                               startRecord()
-                           }
-                       } label: {
-                           Image(systemName: "record.circle")
-                               .resizable()
-                               .scaledToFit()
-                               .frame(width: 25, height: 25)
-                               .foregroundStyle(Color.ADAutechrePlayButton)
-                       }
-                       .buttonStyle(.borderedProminent)
-                       .buttonBorderShape(.roundedRectangle)
-                       .tint(.clear)
                        
-                       Button {
-                           print("stop")
-                           Task {
-                               stopRecord()
+                       if !isRecording {
+                           Button {
+                               print("record")
+                               Task {
+                                   startRecord()
+                               }
+                           } label: {
+                               Image(systemName: "record.circle")
+                                   .resizable()
+                                   .scaledToFit()
+                                   .frame(width: 25, height: 25)
+                                   .foregroundStyle(Color.ADAutechrePlayButton)
                            }
-                       } label: {
-                           Image(systemName: "stop.circle")
-                               .resizable()
-                               .scaledToFit()
-                               .frame(width: 25, height: 25)
-                               .foregroundStyle(Color.red)
+                           .buttonStyle(.borderedProminent)
+                           .buttonBorderShape(.roundedRectangle)
+                           .tint(.clear)
+                       } else {
+                           Button {
+                               print("stop")
+                               Task {
+                                   stopRecord()
+                               }
+                           } label: {
+                               Image(systemName: "stop.circle")
+                                   .resizable()
+                                   .scaledToFit()
+                                   .frame(width: 25, height: 25)
+                                   .foregroundStyle(Color.red)
+                           }
+                           .buttonStyle(.borderedProminent)
+                           .buttonBorderShape(.roundedRectangle)
+                           .tint(.clear)
                        }
-                       .buttonStyle(.borderedProminent)
-                       .buttonBorderShape(.roundedRectangle)
-                       .tint(.clear)
+                      
                    }
                    
                }
@@ -116,6 +120,7 @@ struct ADSquarePusherView: View {
        .onDisappear {
            // update appstorage with the last selected kit
            selectedKitID = selectedKit.internalTitle
+           stopRecord()
        }
        
        
