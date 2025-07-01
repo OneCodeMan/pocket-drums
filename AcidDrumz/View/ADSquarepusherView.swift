@@ -30,7 +30,6 @@ struct ADSquarePusherView: View {
                LazyVGrid(columns: columns, spacing: 10) {
                    ForEach(selectedKit.sounds, id: \.self) { item in
                        ADOneShotView(item: item)
-                       
                    }
                }
                .padding(.horizontal)
