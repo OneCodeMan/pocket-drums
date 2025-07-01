@@ -6,6 +6,11 @@
 //
 
 // For the different button colours
+/**
+ Autechre playlist:
+ 1. Melve
+ 2.
+ */
 
 import Foundation
 import SwiftUI
@@ -24,6 +29,8 @@ extension Color {
     static let ADOneShotSoirBleuTapState: Color = Color(red: 62.0 / 255.0, green: 146.0 / 255.0, blue: 204.0 / 255.0)
     
     static let ADOneShotHangoverPinkTapState: Color = Color(red: 229.0 / 255.0, green: 195.0 / 255.0, blue: 209.0 / 255.0)
+    
+    static let ADAutechreModeInactiveSquare: Color = Color(red: 126.0 / 255.0, green: 137.0 / 255.0, blue: 135.0 / 255.0)
     
     static let ADOneShotInactiveColourSquare: Color = .blue // TODO
     
