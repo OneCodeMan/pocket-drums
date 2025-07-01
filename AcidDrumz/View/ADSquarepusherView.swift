@@ -14,6 +14,7 @@ struct ADSquarePusherView: View {
     
     @State var selectedKitString: String
     @State private var selectedKit: ADSoundPack = ADKitManager.tr808_kit
+    @StateObject var recorder: Recorder = Recorder()
 
    let columns = [
        GridItem(.adaptive(minimum: 80))
@@ -35,22 +36,6 @@ struct ADSquarePusherView: View {
            LazyVGrid(columns: columns, spacing: 10) {
                ForEach(ADKitManager.fx_pack_01, id: \.self) { item in
                    ADOneShotView(item: item)
-//                   Button(action: {
-//                       tappedItem = item
-//                       playSound(soundName: item.fileString)
-//
-//                       // Reset the tapped state after a short delay
-//                       DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-//                           tappedItem = nil
-//                       }
-//                   }) {
-//                       Text(item.name)
-//                           .frame(minWidth: 40, minHeight: 40)
-//                           .padding()
-//                           .background(tappedItem == item ? Color.green : Color.blue)
-//                           .foregroundColor(.white)
-//                           .cornerRadius(8)
-//                   }
                }
            }
            .padding(.top, 12)
@@ -69,6 +54,45 @@ struct ADSquarePusherView: View {
 
                Text("Selected Kit: \(selectedKit.title)")
            }
+           
+           // MARK: Record
+           Group {
+               HStack {
+                   Button {
+                       print("record")
+                       Task {
+                           //try recorder.startRecording()
+                       }
+                   } label: {
+                       Image(systemName: "record.circle")
+                           .resizable()
+                           .scaledToFit()
+                           .frame(width: 25, height: 25)
+                           .foregroundStyle(Color.ADAutechrePlayButton)
+                   }
+                   .buttonStyle(.borderedProminent)
+                   .buttonBorderShape(.roundedRectangle)
+                   .tint(.clear)
+                   
+                   Button {
+                       print("stop")
+                       Task {
+                         // try recorder.stopRecording()
+                       }
+                   } label: {
+                       Image(systemName: "stop.circle")
+                           .resizable()
+                           .scaledToFit()
+                           .frame(width: 25, height: 25)
+                           .foregroundStyle(Color.red)
+                   }
+                   .buttonStyle(.borderedProminent)
+                   .buttonBorderShape(.roundedRectangle)
+                   .tint(.clear)
+               }
+               
+           }
+           .padding()
            
            
        }
