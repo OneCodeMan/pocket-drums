@@ -6,75 +6,39 @@
 //
 import SwiftUI
 import ReplayKit
+import AVFoundation
 
-struct RPDemoView: View {
-    let recorder = RPScreenRecorder.shared()
-
-    @State private var isRecording = false
-    @State private var isShowPreviewVideo = false
-    @State private var rp: RPPreviewView!
-
-    var body: some View {
-        ZStack {
-            VStack {
-                Button(action: {
-                    if !isRecording {
-                        startRecord()
-                    } else {
-                        stopRecord()
-                    }
-                }) {
-                    Image(systemName: isRecording ? "stop.circle" : "video.circle")
-                        .resizable()
-                        .frame(width: 100, height: 100)
-                }
-            }
-
-            if isShowPreviewVideo {
-                rp
-                    .transition(.move(edge: .bottom))
-                    .edgesIgnoringSafeArea(.all)
-            }
-        }
+func extractAudio(from url: URL, completion: @escaping (URL?) -> Void) {
+    let asset = AVURLAsset(url: url)
+    
+    guard let exportSession = AVAssetExportSession(asset: asset, presetName: AVAssetExportPresetAppleM4A) else {
+        print("Failed to create export session")
+        completion(nil)
+        return
     }
 
-    func startRecord() {
-        guard recorder.isAvailable else {
-            print("Recording is not available at this time.")
-            return
-        }
+    let outputURL = FileManager.default.temporaryDirectory.appendingPathComponent("ExtractedAudio.m4a")
 
-        if !recorder.isRecording {
-            recorder.startRecording { error in
-                guard error == nil else {
-                    print("There was an error starting the recording: \(error!)")
-                    return
-                }
+    // Remove file if it exists
+    try? FileManager.default.removeItem(at: outputURL)
 
-                print("Started Recording Successfully")
-                isRecording = true
-            }
-        }
-    }
+    exportSession.outputURL = outputURL
+    exportSession.outputFileType = .m4a
 
-    func stopRecord() {
-        recorder.stopRecording { preview, error in
-            print("Stopped recording")
-            isRecording = false
-
-            guard let preview = preview else {
-                print("Preview controller is not available.")
-                return
-            }
-
-            rp = RPPreviewView(rpPreviewViewController: preview, isShow: $isShowPreviewVideo)
-
-            withAnimation {
-                isShowPreviewVideo = true
-            }
+    exportSession.exportAsynchronously {
+        switch exportSession.status {
+        case .completed:
+            print("Audio exported successfully to \(outputURL)")
+            completion(outputURL)
+        case .failed, .cancelled:
+            print("Export failed: \(exportSession.error?.localizedDescription ?? "Unknown error")")
+            completion(nil)
+        default:
+            break
         }
     }
 }
+
 
 struct RPPreviewView: UIViewControllerRepresentable {
     let rpPreviewViewController: RPPreviewViewController
