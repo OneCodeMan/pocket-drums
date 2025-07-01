@@ -12,7 +12,7 @@ import SwiftUI
 
 struct ADModeView: View {
 
-    @State var currentModeOnScreen: ADWorkMode = .ADSquarepusherMode
+    @State var currentModeOnScreen: ADWorkMode = .ADAutechreMode
     @AppStorage("selectedKitID") var selectedKitID: String?
     
     var body: some View {
