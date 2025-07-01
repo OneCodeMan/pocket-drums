@@ -6,6 +6,7 @@
 //
 import SwiftUI
 import AVFoundation
+import ReplayKit
 
 struct ADSquarePusherView: View {
     @AppStorage("selectedKitID") var selectedKitID: String?
@@ -14,87 +15,98 @@ struct ADSquarePusherView: View {
     
     @State var selectedKitString: String
     @State private var selectedKit: ADSoundPack = ADKitManager.tr808_kit
-    @StateObject var recorder: Recorder = Recorder()
+    let recorder = RPScreenRecorder.shared()
+    @State private var isRecording = false
+    @State private var isShowPreviewVideo = false
+    @State private var rp: RPPreviewView!
 
    let columns = [
        GridItem(.adaptive(minimum: 80))
    ]
 
    var body: some View {
-       ScrollView {
-           LazyVGrid(columns: columns, spacing: 10) {
-               ForEach(selectedKit.sounds, id: \.self) { item in
-                   ADOneShotView(item: item)
-                   
-               }
-           }
-           .padding(.horizontal)
-           .padding(.top, 20)
-           
-           Divider()
-           
-           LazyVGrid(columns: columns, spacing: 10) {
-               ForEach(ADKitManager.fx_pack_01, id: \.self) { item in
-                   ADOneShotView(item: item)
-               }
-           }
-           .padding(.top, 12)
-           .padding(.horizontal)
-           
-           
-           // MARK: Menu
-           VStack {
-               // this is where the last kit is selected for appstorage
-               Picker("Select Kit", selection: $selectedKit) {
-                   ForEach(ADKitManager.kits, id: \.self) {
-                       Text($0.title)
+       ZStack {
+           ScrollView {
+               LazyVGrid(columns: columns, spacing: 10) {
+                   ForEach(selectedKit.sounds, id: \.self) { item in
+                       ADOneShotView(item: item)
+                       
                    }
                }
-               .pickerStyle(.menu)
+               .padding(.horizontal)
+               .padding(.top, 20)
+               
+               Divider()
+               
+               LazyVGrid(columns: columns, spacing: 10) {
+                   ForEach(ADKitManager.fx_pack_01, id: \.self) { item in
+                       ADOneShotView(item: item)
+                   }
+               }
+               .padding(.top, 12)
+               .padding(.horizontal)
+               
+               
+               // MARK: Menu
+               VStack {
+                   // this is where the last kit is selected for appstorage
+                   Picker("Select Kit", selection: $selectedKit) {
+                       ForEach(ADKitManager.kits, id: \.self) {
+                           Text($0.title)
+                       }
+                   }
+                   .pickerStyle(.menu)
 
-               Text("Selected Kit: \(selectedKit.title)")
-           }
-           
-           // MARK: Record
-           Group {
-               HStack {
-                   Button {
-                       print("record")
-                       Task {
-                           //try recorder.startRecording()
-                       }
-                   } label: {
-                       Image(systemName: "record.circle")
-                           .resizable()
-                           .scaledToFit()
-                           .frame(width: 25, height: 25)
-                           .foregroundStyle(Color.ADAutechrePlayButton)
-                   }
-                   .buttonStyle(.borderedProminent)
-                   .buttonBorderShape(.roundedRectangle)
-                   .tint(.clear)
-                   
-                   Button {
-                       print("stop")
-                       Task {
-                         // try recorder.stopRecording()
-                       }
-                   } label: {
-                       Image(systemName: "stop.circle")
-                           .resizable()
-                           .scaledToFit()
-                           .frame(width: 25, height: 25)
-                           .foregroundStyle(Color.red)
-                   }
-                   .buttonStyle(.borderedProminent)
-                   .buttonBorderShape(.roundedRectangle)
-                   .tint(.clear)
+                   Text("Selected Kit: \(selectedKit.title)")
                }
                
+               // MARK: Record
+               Group {
+                   HStack {
+                       Button {
+                           print("record")
+                           Task {
+                               startRecord()
+                           }
+                       } label: {
+                           Image(systemName: "record.circle")
+                               .resizable()
+                               .scaledToFit()
+                               .frame(width: 25, height: 25)
+                               .foregroundStyle(Color.ADAutechrePlayButton)
+                       }
+                       .buttonStyle(.borderedProminent)
+                       .buttonBorderShape(.roundedRectangle)
+                       .tint(.clear)
+                       
+                       Button {
+                           print("stop")
+                           Task {
+                               stopRecord()
+                           }
+                       } label: {
+                           Image(systemName: "stop.circle")
+                               .resizable()
+                               .scaledToFit()
+                               .frame(width: 25, height: 25)
+                               .foregroundStyle(Color.red)
+                       }
+                       .buttonStyle(.borderedProminent)
+                       .buttonBorderShape(.roundedRectangle)
+                       .tint(.clear)
+                   }
+                   
+               }
+               .padding()
+               
+               
            }
-           .padding()
            
-           
+           if isShowPreviewVideo {
+               rp
+                   .transition(.move(edge: .bottom))
+                   .edgesIgnoringSafeArea(.all)
+           }
        }
        .padding(12)
        .task {
@@ -105,7 +117,46 @@ struct ADSquarePusherView: View {
            // update appstorage with the last selected kit
            selectedKitID = selectedKit.internalTitle
        }
+       
+       
    }
+    
+    func startRecord() {
+        guard recorder.isAvailable else {
+            print("Recording is not available at this time.")
+            return
+        }
+
+        if !recorder.isRecording {
+            recorder.startRecording { error in
+                guard error == nil else {
+                    print("There was an error starting the recording: \(error!)")
+                    return
+                }
+
+                print("Started Recording Successfully")
+                isRecording = true
+            }
+        }
+    }
+
+    func stopRecord() {
+        recorder.stopRecording { preview, error in
+            print("Stopped recording")
+            isRecording = false
+
+            guard let preview = preview else {
+                print("Preview controller is not available.")
+                return
+            }
+
+            rp = RPPreviewView(rpPreviewViewController: preview, isShow: $isShowPreviewVideo)
+
+            withAnimation {
+                isShowPreviewVideo = true
+            }
+        }
+    }
     
     func playSound(soundName: String, soundVol: Float = 1.0) {
         guard let path = Bundle.main.path(forResource: soundName, ofType: "wav") else {
