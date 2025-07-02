@@ -164,21 +164,21 @@ struct ADSquarePusherView: View {
     
     func playSound(soundName: String, soundVol: Float = 1.0) {
         guard let path = Bundle.main.path(forResource: soundName, ofType: "wav") else {
-                print("path not created")
-                return
-            }
-
-            let url = URL(fileURLWithPath: path)
-
-            do {
-                // DOES NOT PLAY SOUND WITHOUT THIS
-                try? AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback, mode: AVAudioSession.Mode.default, options: [])
-                player = try AVAudioPlayer(contentsOf: url)
-                player?.volume = soundVol
-                player?.play()
-            } catch {
-                print("Error playing sound: \(error.localizedDescription)")
-            }
+            print("path not created")
+            return
         }
+
+        let url = URL(fileURLWithPath: path)
+
+        do {
+            // DOES NOT PLAY SOUND WITHOUT THIS
+            try? AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback, mode: AVAudioSession.Mode.default, options: [])
+            player = try AVAudioPlayer(contentsOf: url)
+            player?.volume = soundVol
+            player?.play()
+        } catch {
+            print("Error playing sound: \(error.localizedDescription)")
+        }
+    }
 }
 

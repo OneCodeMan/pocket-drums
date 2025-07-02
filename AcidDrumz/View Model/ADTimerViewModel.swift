@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import Combine
+import AVFoundation
 
 enum Phase {
     case work, rest, inactive, sessionDone
@@ -17,6 +18,8 @@ final class TimerViewModel: ObservableObject {
     @Published var elapsedSeconds: Duration = .seconds(0)
     @Published var elapsedMilliseconds: Int = 0
     @Published var isTimerOnPlay: Bool = false
+    
+    @State var player: AVAudioPlayer?
     
     private var cancellable: Cancellable?
     private var currentPhase: Phase = .work
@@ -127,17 +130,36 @@ final class TimerViewModel: ObservableObject {
         // This is where you'd trigger your audio engine/samples
         print("Playing sound: \(soundValue) at time: \(elapsedMilliseconds)ms, index: \(currentSoundIndex)")
         
+        var soundName: String = ""
+        
         // Example of what this might look like:
-        // switch soundValue {
-        // case 1:
-        //     audioEngine.playKick()
-        // case 2:
-        //     audioEngine.playSnare()
-        // case 3:
-        //     audioEngine.playHiHat()
-        // default:
-        //     break
-        // }
+         switch soundValue {
+         case 1:
+             soundName = "tr-808-bd-kick-01"
+         case 2:
+             soundName = "tr-808-sn-01"
+         case 3:
+             soundName = "tr-808-ch-01"
+         default:
+             break
+         }
+        
+        guard let path = Bundle.main.path(forResource: soundName, ofType: "wav") else {
+            print("path not created")
+            return
+        }
+
+        let url = URL(fileURLWithPath: path)
+
+        do {
+            // DOES NOT PLAY SOUND WITHOUT THIS
+            try? AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback, mode: AVAudioSession.Mode.default, options: [])
+            player = try AVAudioPlayer(contentsOf: url)
+            player?.volume = 1.0
+            player?.play()
+        } catch {
+            print("Error playing sound: \(error.localizedDescription)")
+        }
     }
     
     private func handleRoundCompletion() {

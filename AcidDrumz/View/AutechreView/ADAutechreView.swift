@@ -18,6 +18,8 @@ struct ADAutechreView: View {
     let columns = Array(repeating: GridItem(.flexible()), count: 16)
     let rows = Array(repeating: GridItem(.fixed(30)), count: 6)
     
+    @StateObject var timerViewModel: TimerViewModel = TimerViewModel()
+    
     @State private var currentPhraseOnDisplay: ADAutechreModeCurrentPhraseOnDisplay = .bar16
     
     @State var bpm: Double = 128.0
@@ -215,6 +217,7 @@ struct ADAutechreView: View {
                     HStack {
                         Button {
                             print("16barz pressed")
+                            currentPhraseOnDisplay = .bar16
                         } label: {
                             Text("16")
                                 .padding()
@@ -224,6 +227,7 @@ struct ADAutechreView: View {
                         
                         Button {
                             print("32barz pressed")
+                            currentPhraseOnDisplay = .bar32
                         } label: {
                             Text("32")
                                 .padding()
@@ -235,6 +239,7 @@ struct ADAutechreView: View {
                     HStack {
                         Button {
                             print("48barz pressed")
+                            currentPhraseOnDisplay = .bar48
                         } label: {
                             Text("48")
                                 .padding()
@@ -244,6 +249,7 @@ struct ADAutechreView: View {
                         
                         Button {
                             print("64barz pressed")
+                            currentPhraseOnDisplay = .bar64
                         } label: {
                             Text("64")
                                 .padding()
@@ -259,6 +265,7 @@ struct ADAutechreView: View {
                         // TODO: Convert inputs to Sonic Pi-esque arrays
                         // translate to sound using timer
                         print("play pressed")
+                        timerViewModel.activateTimer()
                     } label: {
                         Image(systemName: "play.fill")
                             .resizable()
