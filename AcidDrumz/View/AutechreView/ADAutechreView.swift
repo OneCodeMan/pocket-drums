@@ -21,6 +21,7 @@ struct ADAutechreView: View {
     @StateObject var timerViewModel: TimerViewModel = TimerViewModel()
     
     @State private var currentPhraseOnDisplay: ADAutechreModeCurrentPhraseOnDisplay = .bar16
+    @State private var isPlayPressed: Bool = false
     
     @State var bpm: Double = 128.0
     
@@ -75,9 +76,9 @@ struct ADAutechreView: View {
                     }
                 case .bar32:
                     GridRow {
-                        ForEach(18..<35) { i in
+                        ForEach(16..<33) { i in
                             Text("\(i)")
-                                .opacity(i > 0 ? 1.0 : 0.0)
+                                .opacity(i > 16 ? 1.0 : 0.0)
                         }
                     }
                     
@@ -118,9 +119,9 @@ struct ADAutechreView: View {
                     }
                 case .bar48:
                     GridRow {
-                        ForEach(36..<50) { i in
+                        ForEach(32..<49) { i in
                             Text("\(i)")
-                                .opacity(i > 0 ? 1.0 : 0.0)
+                                .opacity(i > 32 ? 1.0 : 0.0)
                         }
                     }
                     
@@ -161,9 +162,9 @@ struct ADAutechreView: View {
                     }
                 case .bar64:
                     GridRow {
-                        ForEach(51..<67) { i in
+                        ForEach(48..<65) { i in
                             Text("\(i)")
-                                .opacity(i > 0 ? 1.0 : 0.0)
+                                .opacity(i > 48 ? 1.0 : 0.0)
                         }
                     }
                     
@@ -209,54 +210,50 @@ struct ADAutechreView: View {
                 
             }
             
-            // MARK: Buttons
-            Group {
-                
-                // MARK: which phrase is on current display
-                VStack {
-                    HStack {
-                        Button {
-                            print("16barz pressed")
-                            currentPhraseOnDisplay = .bar16
-                        } label: {
-                            Text("16")
-                                .padding()
-                        }
-                        .buttonStyle(.borderedProminent)
-                        .buttonBorderShape(.roundedRectangle)
-                        
-                        Button {
-                            print("32barz pressed")
-                            currentPhraseOnDisplay = .bar32
-                        } label: {
-                            Text("32")
-                                .padding()
-                        }
-                        .buttonStyle(.borderedProminent)
-                        .buttonBorderShape(.roundedRectangle)
+            // MARK: which phrase is on current display
+            HStack {
+                HStack {
+                    Button {
+                        print("16barz pressed")
+                        currentPhraseOnDisplay = .bar16
+                    } label: {
+                        Text("16")
+                            .padding(2)
                     }
+                    .buttonStyle(.borderedProminent)
+                    .buttonBorderShape(.roundedRectangle)
                     
-                    HStack {
-                        Button {
-                            print("48barz pressed")
-                            currentPhraseOnDisplay = .bar48
-                        } label: {
-                            Text("48")
-                                .padding()
-                        }
-                        .buttonStyle(.borderedProminent)
-                        .buttonBorderShape(.roundedRectangle)
-                        
-                        Button {
-                            print("64barz pressed")
-                            currentPhraseOnDisplay = .bar64
-                        } label: {
-                            Text("64")
-                                .padding()
-                        }
-                        .buttonStyle(.borderedProminent)
-                        .buttonBorderShape(.roundedRectangle)
+                    Button {
+                        print("32barz pressed")
+                        currentPhraseOnDisplay = .bar32
+                    } label: {
+                        Text("32")
+                            .padding(2)
                     }
+                    .buttonStyle(.borderedProminent)
+                    .buttonBorderShape(.roundedRectangle)
+                }
+                
+                HStack {
+                    Button {
+                        print("48barz pressed")
+                        currentPhraseOnDisplay = .bar48
+                    } label: {
+                        Text("48")
+                            .padding(2)
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .buttonBorderShape(.roundedRectangle)
+                    
+                    Button {
+                        print("64barz pressed")
+                        currentPhraseOnDisplay = .bar64
+                    } label: {
+                        Text("64")
+                            .padding(2)
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .buttonBorderShape(.roundedRectangle)
                 }
                 
                 // MARK: play/bpm
@@ -265,9 +262,10 @@ struct ADAutechreView: View {
                         // TODO: Convert inputs to Sonic Pi-esque arrays
                         // translate to sound using timer
                         print("play pressed")
+                        isPlayPressed.toggle()
                         timerViewModel.activateTimer()
                     } label: {
-                        Image(systemName: "play.fill")
+                        Image(systemName: isPlayPressed ? "pause.fill" : "play.fill")
                             .resizable()
                             .scaledToFit()
                             .frame(width: 25, height: 25)
@@ -283,6 +281,5 @@ struct ADAutechreView: View {
             }
             .padding()
         }
-        
     }
 }
