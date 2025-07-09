@@ -22,15 +22,19 @@ final class ADAutechreGridViewModel: ObservableObject {
     init() {
         print(beatGrid.count)
         self.bar16 = Array(beatGrid.prefix(4))
-        self.bar32 = Array(beatGrid[5..<9])
-        self.bar48 = Array(beatGrid[9..<13])
-        self.bar64 = Array(beatGrid[13..<17])
+        self.bar32 = Array(beatGrid[4..<8])
+        self.bar48 = Array(beatGrid[8..<12])
+        self.bar64 = Array(beatGrid[12..<16])
     }
     
     // T
     func onPlayPressed() {
         print("play pressed")
         
+    }
+    
+    func flatBar(from bar: [[Int]]) -> [Int] {
+        return bar.flatMap { $0 }
     }
     
     

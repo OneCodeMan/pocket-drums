@@ -40,45 +40,24 @@ struct ADAutechreView: View {
                                 .opacity(i > 0 ? 1.0 : 0.0)
                         }
                     }
-                    
+                
+                    let flatBar16 = gridViewModel.flatBar(from: gridViewModel.bar16)
                     ForEach(0..<6) { row in
                         GridRow {
-                            // very first column is the label
                             Text(labels[row])
                                 .gridCellAnchor(.center)
-                            // for each bar
-                            ForEach(0..<gridViewModel.bar16.count) {
-                                bar in
-                                
-                                // for each quarter note
-                                ForEach(0..<gridViewModel.bar16[bar].count) { note in
-                                    let currentRow = labels[row]
-                                    if currentRow == "BD" {
-                                        ADAutechreOneSquare(squareType: ADAutechreSquareType.kick)
+
+                            ForEach(0..<16) { i in
+                                let value = flatBar16[i]
+                                let index = row
+                                if value == index + 1 {
+                                    if let squareType = ADAutechreSquareType(rawValue: value) {
+                                        ADAutechreOneSquare(squareType: squareType)
                                     }
-                                    
-                                    if currentRow == "SN" {
-                                        ADAutechreOneSquare(squareType: ADAutechreSquareType.snare)
-                                    }
-                                    
-                                    if currentRow == "CH" {
-                                        ADAutechreOneSquare(squareType: ADAutechreSquareType.hat)
-                                    }
-                                    
-                                    if currentRow == "OH" {
-                                        ADAutechreOneSquare(squareType: ADAutechreSquareType.hat)
-                                    }
-                                    
-                                    if currentRow == "T" {
-                                        ADAutechreOneSquare(squareType: ADAutechreSquareType.tom)
-                                    }
-                                    
-                                    if currentRow == "SH" {
-                                        ADAutechreOneSquare(squareType: ADAutechreSquareType.perc)
-                                    }
+                                } else {
+                                    ADAutechreOneSquare(squareType: .empty)
                                 }
-                                
-                            } // end of foreach bar
+                            }
                         }
                     }
                 case .bar32:
@@ -88,39 +67,22 @@ struct ADAutechreView: View {
                                 .opacity(i > 16 ? 1.0 : 0.0)
                         }
                     }
-                    
+                    let flatBar32 = gridViewModel.flatBar(from: gridViewModel.bar32)
                     ForEach(0..<6) { row in
                         GridRow {
-                            // very first column is the label
                             Text(labels[row])
                                 .gridCellAnchor(.center)
-                            ForEach(0..<gridViewModel.bar32.count) {
-                                _ in
-                                let currentRow = labels[row]
-                                if currentRow == "BD" {
-                                    ADAutechreOneSquare(squareType: ADAutechreSquareType.kick)
+
+                            ForEach(0..<16) { i in
+                                let value = flatBar32[i]
+                                let index = row
+                                if value == index + 1 {
+                                    if let squareType = ADAutechreSquareType(rawValue: value) {
+                                        ADAutechreOneSquare(squareType: squareType)
+                                    }
+                                } else {
+                                    ADAutechreOneSquare(squareType: .empty)
                                 }
-                                
-                                if currentRow == "SN" {
-                                    ADAutechreOneSquare(squareType: ADAutechreSquareType.snare)
-                                }
-                                
-                                if currentRow == "CH" {
-                                    ADAutechreOneSquare(squareType: ADAutechreSquareType.hat)
-                                }
-                                
-                                if currentRow == "OH" {
-                                    ADAutechreOneSquare(squareType: ADAutechreSquareType.hat)
-                                }
-                                
-                                if currentRow == "T" {
-                                    ADAutechreOneSquare(squareType: ADAutechreSquareType.tom)
-                                }
-                                
-                                if currentRow == "SH" {
-                                    ADAutechreOneSquare(squareType: ADAutechreSquareType.perc)
-                                }
-                                
                             }
                         }
                     }
@@ -131,39 +93,22 @@ struct ADAutechreView: View {
                                 .opacity(i > 32 ? 1.0 : 0.0)
                         }
                     }
-                    
+                    let flatBar48 = gridViewModel.flatBar(from: gridViewModel.bar48)
                     ForEach(0..<6) { row in
                         GridRow {
-                            // very first column is the label
                             Text(labels[row])
                                 .gridCellAnchor(.center)
-                            ForEach(0..<gridViewModel.bar48.count) {
-                                _ in
-                                let currentRow = labels[row]
-                                if currentRow == "BD" {
-                                    ADAutechreOneSquare(squareType: ADAutechreSquareType.kick)
+
+                            ForEach(0..<16) { i in
+                                let value = flatBar48[i]
+                                let index = row
+                                if value == index + 1 {
+                                    if let squareType = ADAutechreSquareType(rawValue: value) {
+                                        ADAutechreOneSquare(squareType: squareType)
+                                    }
+                                } else {
+                                    ADAutechreOneSquare(squareType: .empty)
                                 }
-                                
-                                if currentRow == "SN" {
-                                    ADAutechreOneSquare(squareType: ADAutechreSquareType.snare)
-                                }
-                                
-                                if currentRow == "CH" {
-                                    ADAutechreOneSquare(squareType: ADAutechreSquareType.hat)
-                                }
-                                
-                                if currentRow == "OH" {
-                                    ADAutechreOneSquare(squareType: ADAutechreSquareType.hat)
-                                }
-                                
-                                if currentRow == "T" {
-                                    ADAutechreOneSquare(squareType: ADAutechreSquareType.tom)
-                                }
-                                
-                                if currentRow == "SH" {
-                                    ADAutechreOneSquare(squareType: ADAutechreSquareType.perc)
-                                }
-                                
                             }
                         }
                     }
@@ -174,39 +119,22 @@ struct ADAutechreView: View {
                                 .opacity(i > 48 ? 1.0 : 0.0)
                         }
                     }
-                    
+                    let flatBar64 = gridViewModel.flatBar(from: gridViewModel.bar64)
                     ForEach(0..<6) { row in
                         GridRow {
-                            // very first column is the label
                             Text(labels[row])
                                 .gridCellAnchor(.center)
-                            ForEach(0..<gridViewModel.bar64.count) {
-                                _ in
-                                let currentRow = labels[row]
-                                if currentRow == "BD" {
-                                    ADAutechreOneSquare(squareType: ADAutechreSquareType.kick)
+
+                            ForEach(0..<16) { i in
+                                let value = flatBar64[i]
+                                let index = row
+                                if value == index + 1 {
+                                    if let squareType = ADAutechreSquareType(rawValue: value) {
+                                        ADAutechreOneSquare(squareType: squareType)
+                                    }
+                                } else {
+                                    ADAutechreOneSquare(squareType: .empty)
                                 }
-                                
-                                if currentRow == "SN" {
-                                    ADAutechreOneSquare(squareType: ADAutechreSquareType.snare)
-                                }
-                                
-                                if currentRow == "CH" {
-                                    ADAutechreOneSquare(squareType: ADAutechreSquareType.hat)
-                                }
-                                
-                                if currentRow == "OH" {
-                                    ADAutechreOneSquare(squareType: ADAutechreSquareType.hat)
-                                }
-                                
-                                if currentRow == "T" {
-                                    ADAutechreOneSquare(squareType: ADAutechreSquareType.tom)
-                                }
-                                
-                                if currentRow == "SH" {
-                                    ADAutechreOneSquare(squareType: ADAutechreSquareType.perc)
-                                }
-                                
                             }
                         }
                     }
@@ -287,4 +215,10 @@ struct ADAutechreView: View {
             .padding()
         }
     }
+    
+    
 }
+
+
+// MARK: ssadasda
+

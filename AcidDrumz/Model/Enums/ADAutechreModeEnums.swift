@@ -17,14 +17,14 @@ enum ADAutechreModeCurrentPhraseOnDisplay {
 }
 
 // MARK: Square Type
-enum ADAutechreSquareType: CustomStringConvertible {
-    case kick
-    case snare
-    case hat
-    case tom
-    case ride
-    case perc
-    case unknown
+enum ADAutechreSquareType: Int, CustomStringConvertible {
+    case kick = 1
+    case snare = 2
+    case hat = 3
+    case tom = 4
+    case ride = 5
+    case perc = 6
+    case empty = 0
     
     var description: String {
         switch self {
@@ -40,7 +40,7 @@ enum ADAutechreSquareType: CustomStringConvertible {
             "SH"
         case .perc:
             "PRC"
-        case .unknown:
+        case .empty:
             "unknown"
         }
     }

@@ -21,7 +21,7 @@ struct ADAutechreOneSquare: View {
         ADAutechreSquareType.tom: Color.ADAutechreTomButton,
         ADAutechreSquareType.perc: Color.ADAutechrePercButton,
         ADAutechreSquareType.ride: Color.brown,
-        ADAutechreSquareType.unknown: Color.brown,
+        ADAutechreSquareType.empty: Color.gray,
     ]
     
     var body: some View {
