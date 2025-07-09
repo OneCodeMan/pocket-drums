@@ -20,6 +20,8 @@ struct ADAutechreView: View {
     
     @StateObject var timerViewModel: TimerViewModel = TimerViewModel()
     
+    @StateObject var gridViewModel: ADAutechreGridViewModel = ADAutechreGridViewModel()
+    
     @State private var currentPhraseOnDisplay: ADAutechreModeCurrentPhraseOnDisplay = .bar16
     @State private var isPlayPressed: Bool = false
     
@@ -44,34 +46,39 @@ struct ADAutechreView: View {
                             // very first column is the label
                             Text(labels[row])
                                 .gridCellAnchor(.center)
-                            ForEach(1..<17) {
-                                _ in
-                                let currentRow = labels[row]
-                                if currentRow == "BD" {
-                                    ADAutechreOneSquare(squareType: ADAutechreSquareType.kick)
+                            // for each bar
+                            ForEach(0..<gridViewModel.bar16.count) {
+                                bar in
+                                
+                                // for each quarter note
+                                ForEach(0..<gridViewModel.bar16[bar].count) { note in
+                                    let currentRow = labels[row]
+                                    if currentRow == "BD" {
+                                        ADAutechreOneSquare(squareType: ADAutechreSquareType.kick)
+                                    }
+                                    
+                                    if currentRow == "SN" {
+                                        ADAutechreOneSquare(squareType: ADAutechreSquareType.snare)
+                                    }
+                                    
+                                    if currentRow == "CH" {
+                                        ADAutechreOneSquare(squareType: ADAutechreSquareType.hat)
+                                    }
+                                    
+                                    if currentRow == "OH" {
+                                        ADAutechreOneSquare(squareType: ADAutechreSquareType.hat)
+                                    }
+                                    
+                                    if currentRow == "T" {
+                                        ADAutechreOneSquare(squareType: ADAutechreSquareType.tom)
+                                    }
+                                    
+                                    if currentRow == "SH" {
+                                        ADAutechreOneSquare(squareType: ADAutechreSquareType.perc)
+                                    }
                                 }
                                 
-                                if currentRow == "SN" {
-                                    ADAutechreOneSquare(squareType: ADAutechreSquareType.snare)
-                                }
-                                
-                                if currentRow == "CH" {
-                                    ADAutechreOneSquare(squareType: ADAutechreSquareType.hat)
-                                }
-                                
-                                if currentRow == "OH" {
-                                    ADAutechreOneSquare(squareType: ADAutechreSquareType.hat)
-                                }
-                                
-                                if currentRow == "T" {
-                                    ADAutechreOneSquare(squareType: ADAutechreSquareType.tom)
-                                }
-                                
-                                if currentRow == "SH" {
-                                    ADAutechreOneSquare(squareType: ADAutechreSquareType.perc)
-                                }
-                                
-                            }
+                            } // end of foreach bar
                         }
                     }
                 case .bar32:
@@ -87,7 +94,7 @@ struct ADAutechreView: View {
                             // very first column is the label
                             Text(labels[row])
                                 .gridCellAnchor(.center)
-                            ForEach(1..<17) {
+                            ForEach(0..<gridViewModel.bar32.count) {
                                 _ in
                                 let currentRow = labels[row]
                                 if currentRow == "BD" {
@@ -130,7 +137,7 @@ struct ADAutechreView: View {
                             // very first column is the label
                             Text(labels[row])
                                 .gridCellAnchor(.center)
-                            ForEach(1..<17) {
+                            ForEach(0..<gridViewModel.bar48.count) {
                                 _ in
                                 let currentRow = labels[row]
                                 if currentRow == "BD" {
@@ -173,7 +180,7 @@ struct ADAutechreView: View {
                             // very first column is the label
                             Text(labels[row])
                                 .gridCellAnchor(.center)
-                            ForEach(1..<17) {
+                            ForEach(0..<gridViewModel.bar64.count) {
                                 _ in
                                 let currentRow = labels[row]
                                 if currentRow == "BD" {
@@ -206,8 +213,6 @@ struct ADAutechreView: View {
                 case .unknown:
                     EmptyView()
                 }
-                
-                
             }
             
             // MARK: which phrase is on current display
