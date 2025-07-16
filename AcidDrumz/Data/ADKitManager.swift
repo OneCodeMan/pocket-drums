@@ -17,13 +17,15 @@ struct ADKitManager {
     
     // MARK: kits
     static let kits = [tr808_kit, decentkit_kit, elka80_kit, moog_kit, basic_kit]
-    static let fxkits = [fxpack1_kit]
+    static let fxkits = [fxpack1_kit, fxpack2_kit, fxpack3_kit]
     static let tr808_kit: ADSoundPack = ADSoundPack(sounds: tr808_sounds, title: "TR 808", internalTitle: "tr808")
     static let decentkit_kit: ADSoundPack = ADSoundPack(sounds: decentkit_sounds, title: "Default", internalTitle: "def1")
     static let elka80_kit: ADSoundPack = ADSoundPack(sounds: elka80_sounds, title: "Elka 80", internalTitle: "elka80")
     static let moog_kit: ADSoundPack = ADSoundPack(sounds: moog_kit_sounds, title: "Moog Acid", internalTitle: "moogacid")
     static let basic_kit: ADSoundPack = ADSoundPack(sounds: basic_kit_sounds, title: "Default2", internalTitle: "default2")
     static let fxpack1_kit: ADSoundPack = ADSoundPack(sounds: fx_pack_01, title: "FX 1", internalTitle: "fx1")
+    static let fxpack2_kit: ADSoundPack = ADSoundPack(sounds: fx_pack_02, title: "FX 2", internalTitle: "fx2")
+    static let fxpack3_kit: ADSoundPack = ADSoundPack(sounds: fx_pack_03, title: "FX 3", internalTitle: "fx3")
     
     // MARK: sounds
     static let tr808_sounds = [
@@ -100,8 +102,21 @@ struct ADKitManager {
     // MARK: fx pack
     static let fx_pack_01 = [
         ADOneShotSound(name: "glitch 1", fileString: "glitch1"),
-        ADOneShotSound(name: "glitch 2", fileString: "glitch2"),
+        ADOneShotSound(name: "triangle", fileString: "LongTriangle"),
         ADOneShotSound(name: "laser", fileString: "laser1"),
         ADOneShotSound(name: "synth dub", fileString: "synthdub"),
+        ADOneShotSound(name: "rev kick", fileString: "revkick"),
+    ]
+    
+    static let fx_pack_02 = [
+        ADOneShotSound(name: "cabasa", fileString: "DRM-1 Cabasa"),
+        ADOneShotSound(name: "glitch", fileString: "glitch2"),
+        ADOneShotSound(name: "laser", fileString: "laser3"),
+        ADOneShotSound(name: "vinyl", fileString: "vinyl-scratch"),
+        ADOneShotSound(name: "zap", fileString: "zap1"),
+    ]
+    
+    static let fx_pack_03 = [
+        ADOneShotSound(name: "Mito 4", fileString: "Mito 4 TB 303 frog 1"),
     ]
 }
