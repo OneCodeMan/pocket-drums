@@ -10,13 +10,20 @@ import SwiftUI
 
 struct ADKitManager {
     
+    // TODO: this
+    static let master_kickz = [
+        ADOneShotSound(name: "kick", fileString: "tr-808-bd-kick-01"),
+    ]
+    
     // MARK: kits
     static let kits = [tr808_kit, decentkit_kit, elka80_kit, moog_kit, basic_kit]
+    static let fxkits = [fxpack1_kit]
     static let tr808_kit: ADSoundPack = ADSoundPack(sounds: tr808_sounds, title: "TR 808", internalTitle: "tr808")
     static let decentkit_kit: ADSoundPack = ADSoundPack(sounds: decentkit_sounds, title: "Default", internalTitle: "def1")
     static let elka80_kit: ADSoundPack = ADSoundPack(sounds: elka80_sounds, title: "Elka 80", internalTitle: "elka80")
     static let moog_kit: ADSoundPack = ADSoundPack(sounds: moog_kit_sounds, title: "Moog Acid", internalTitle: "moogacid")
     static let basic_kit: ADSoundPack = ADSoundPack(sounds: basic_kit_sounds, title: "Default2", internalTitle: "default2")
+    static let fxpack1_kit: ADSoundPack = ADSoundPack(sounds: fx_pack_01, title: "FX 1", internalTitle: "fx1")
     
     // MARK: sounds
     static let tr808_sounds = [

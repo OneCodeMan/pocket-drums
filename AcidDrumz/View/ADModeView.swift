@@ -15,6 +15,9 @@ struct ADModeView: View {
     @State var currentModeOnScreen: ADWorkMode = .ADSquarepusherMode
     @AppStorage("selectedKitID") var selectedKitID: String?
     
+    @State var displaySelectKitMenu: Bool = false
+    @State var displaySelectFXMenu: Bool = false
+    
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -47,6 +50,23 @@ struct ADModeView: View {
                             if currentModeOnScreen != .ADSquarepusherMode {
                                 currentModeOnScreen = .ADSquarepusherMode
                             }
+                        }
+                    }
+                }
+                
+                ToolbarItem(placement: .topBarTrailing) {
+                    Menu("Kit", systemImage: "ellipsis") {
+                        Button("Select Kit", systemImage: "pencil") {
+                            
+                            // TODO: Open up a kit modal, it's too overwhelming as menu options
+                            displaySelectKitMenu = true
+                            
+                            
+                        }
+                        
+                        Button("Select FX", systemImage: "shield.pattern.checkered") {
+                            // TODO: Open up a kit modal, it's too overwhelming as menu options
+                            displaySelectFXMenu = true
                         }
                     }
                 }

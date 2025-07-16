@@ -15,9 +15,11 @@ struct ADSquarePusherView: View {
     
     @State var selectedKitString: String
     @State private var selectedKit: ADSoundPack = ADKitManager.tr808_kit
+    @State private var selectedFX: ADSoundPack = ADKitManager.fxpack1_kit
     let recorder = RPScreenRecorder.shared()
     @State private var isRecording = false
     @State private var isShowPreviewVideo = false
+    @State private var displayProgressView = false
     @State private var rp: RPPreviewView!
 
    let columns = [
@@ -27,6 +29,41 @@ struct ADSquarePusherView: View {
    var body: some View {
        ZStack {
            ScrollView {
+               
+               // MARK: Menu
+               // TODO: put this in a context menu
+               HStack {
+                   // this is where the last kit is selected for appstorage
+                   VStack {
+                       Text("Kit")
+                       
+                       Picker("Kit", selection: $selectedKit) {
+                           ForEach(ADKitManager.kits, id: \.self) {
+                               Text($0.title)
+                           }
+                       }
+                       .pickerStyle(.menu)
+                   }
+                   
+                   Spacer()
+                       .frame(width: 70)
+                   
+                   VStack {
+                       Text("FX")
+                       
+                       Picker("FX", selection: $selectedFX) {
+                           ForEach(ADKitManager.fxkits, id: \.self) {
+                               Text($0.title)
+                           }
+                       }
+                       .pickerStyle(.menu)
+                   }
+                   
+                   
+
+                   
+               }
+               
                LazyVGrid(columns: columns, spacing: 10) {
                    ForEach(selectedKit.sounds, id: \.self) { item in
                        ADOneShotView(item: item)
@@ -38,66 +75,64 @@ struct ADSquarePusherView: View {
                Divider()
                
                LazyVGrid(columns: columns, spacing: 10) {
-                   ForEach(ADKitManager.fx_pack_01, id: \.self) { item in
+                   ForEach(selectedFX.sounds, id: \.self) { item in
                        ADOneShotView(item: item)
                    }
                }
                .padding(.top, 12)
                .padding(.horizontal)
                
-               
-               // MARK: Menu
-               VStack {
-                   // this is where the last kit is selected for appstorage
-                   Picker("Select Kit", selection: $selectedKit) {
-                       ForEach(ADKitManager.kits, id: \.self) {
-                           Text($0.title)
-                       }
-                   }
-                   .pickerStyle(.menu)
-
-                   Text("Selected Kit: \(selectedKit.title)")
-               }
+               Divider()
                
                // MARK: Record
-               Group {
-                   HStack {
-                       
-                       if !isRecording {
-                           Button {
-                               print("record")
-                               Task {
-                                   startRecord()
+               VStack {
+                   
+                   if displayProgressView {
+                       // TODO: disable all buttons here?
+                       ProgressView()
+                   } else {
+                       HStack {
+                           
+                           if !isRecording {
+                               Button {
+                                   print("record")
+                                   Task {
+                                       startRecord()
+                                   }
+                               } label: {
+                                   Image(systemName: "record.circle")
+                                       .resizable()
+                                       .scaledToFit()
+                                       .frame(width: 25, height: 25)
+                                       .foregroundStyle(Color.ADAutechrePlayButton)
                                }
-                           } label: {
-                               Image(systemName: "record.circle")
-                                   .resizable()
-                                   .scaledToFit()
-                                   .frame(width: 25, height: 25)
-                                   .foregroundStyle(Color.ADAutechrePlayButton)
-                           }
-                           .buttonStyle(.borderedProminent)
-                           .buttonBorderShape(.roundedRectangle)
-                           .tint(.clear)
-                       } else {
-                           Button {
-                               print("stop")
-                               Task {
-                                   stopRecord()
+                               .buttonStyle(.borderedProminent)
+                               .buttonBorderShape(.roundedRectangle)
+                               .tint(.clear)
+                           } else {
+                               Button {
+                                   print("stop")
+                                   Task {
+                                       stopRecord()
+                                   }
+                               } label: {
+                                   Image(systemName: "stop.circle")
+                                       .resizable()
+                                       .scaledToFit()
+                                       .frame(width: 25, height: 25)
+                                       .foregroundStyle(Color.red)
                                }
-                           } label: {
-                               Image(systemName: "stop.circle")
-                                   .resizable()
-                                   .scaledToFit()
-                                   .frame(width: 25, height: 25)
-                                   .foregroundStyle(Color.red)
+                               .buttonStyle(.borderedProminent)
+                               .buttonBorderShape(.roundedRectangle)
+                               .tint(.clear)
                            }
-                           .buttonStyle(.borderedProminent)
-                           .buttonBorderShape(.roundedRectangle)
-                           .tint(.clear)
+                          
                        }
-                      
+                       
+                       Text(!isRecording ? "Tap to record" : "RECORDING IN PROGRESS")
                    }
+                   
+                   
                    
                }
                .padding()
@@ -145,6 +180,8 @@ struct ADSquarePusherView: View {
     }
 
     func stopRecord() {
+        displayProgressView = true
+        
         recorder.stopRecording { preview, error in
             print("Stopped recording")
             isRecording = false
@@ -158,6 +195,7 @@ struct ADSquarePusherView: View {
 
             withAnimation {
                 isShowPreviewVideo = true
+                displayProgressView = false
             }
         }
     }
