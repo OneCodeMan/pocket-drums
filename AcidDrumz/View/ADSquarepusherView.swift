@@ -66,7 +66,7 @@ struct ADSquarePusherView: View {
                
                LazyVGrid(columns: columns, spacing: 10) {
                    ForEach(selectedKit.sounds, id: \.self) { item in
-                       ADOneShotView(item: item)
+                       ADOneShotDrumView(item: item)
                    }
                }
                .padding(.horizontal)
@@ -76,7 +76,7 @@ struct ADSquarePusherView: View {
                
                LazyVGrid(columns: columns, spacing: 10) {
                    ForEach(selectedFX.sounds, id: \.self) { item in
-                       ADOneShotView(item: item)
+                       ADOneShotFXView(item: item)
                    }
                }
                .padding(.top, 12)
