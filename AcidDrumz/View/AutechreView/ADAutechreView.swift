@@ -15,6 +15,14 @@ import SwiftUI
 struct ADAutechreView: View {
     // 16 for 4 bars; 1 for labeling very left
     let labels: [String] = ["BD", "SN", "CH", "OH", "T", "SH"].reversed()
+    let instrumentTypesInDisplayOrder: [ADAutechreSquareType] = [
+        .ride,  // SH
+        .tom,   // T
+        .perc,  // OH (assuming)
+        .hat,   // CH
+        .snare, // SN
+        .kick   // BD
+    ]
     let columns = Array(repeating: GridItem(.flexible()), count: 16)
     let rows = Array(repeating: GridItem(.fixed(30)), count: 6)
     
@@ -49,11 +57,10 @@ struct ADAutechreView: View {
 
                             ForEach(0..<16) { i in
                                 let value = flatBar16[i]
-                                let index = row
-                                if value == index + 1 {
-                                    if let squareType = ADAutechreSquareType(rawValue: value) {
-                                        ADAutechreOneSquare(squareType: squareType)
-                                    }
+                                let expectedType = instrumentTypesInDisplayOrder[row]
+                                if let squareType = ADAutechreSquareType(rawValue: value),
+                                   squareType == expectedType {
+                                    ADAutechreOneSquare(squareType: squareType)
                                 } else {
                                     ADAutechreOneSquare(squareType: .empty)
                                 }
@@ -76,10 +83,10 @@ struct ADAutechreView: View {
                             ForEach(0..<16) { i in
                                 let value = flatBar32[i]
                                 let index = row
-                                if value == index + 1 {
-                                    if let squareType = ADAutechreSquareType(rawValue: value) {
-                                        ADAutechreOneSquare(squareType: squareType)
-                                    }
+                                let expectedType = instrumentTypesInDisplayOrder[row]
+                                if let squareType = ADAutechreSquareType(rawValue: value),
+                                   squareType == expectedType {
+                                    ADAutechreOneSquare(squareType: squareType)
                                 } else {
                                     ADAutechreOneSquare(squareType: .empty)
                                 }
@@ -102,10 +109,10 @@ struct ADAutechreView: View {
                             ForEach(0..<16) { i in
                                 let value = flatBar48[i]
                                 let index = row
-                                if value == index + 1 {
-                                    if let squareType = ADAutechreSquareType(rawValue: value) {
-                                        ADAutechreOneSquare(squareType: squareType)
-                                    }
+                                let expectedType = instrumentTypesInDisplayOrder[row]
+                                if let squareType = ADAutechreSquareType(rawValue: value),
+                                   squareType == expectedType {
+                                    ADAutechreOneSquare(squareType: squareType)
                                 } else {
                                     ADAutechreOneSquare(squareType: .empty)
                                 }
@@ -128,10 +135,10 @@ struct ADAutechreView: View {
                             ForEach(0..<16) { i in
                                 let value = flatBar64[i]
                                 let index = row
-                                if value == index + 1 {
-                                    if let squareType = ADAutechreSquareType(rawValue: value) {
-                                        ADAutechreOneSquare(squareType: squareType)
-                                    }
+                                let expectedType = instrumentTypesInDisplayOrder[row]
+                                if let squareType = ADAutechreSquareType(rawValue: value),
+                                   squareType == expectedType {
+                                    ADAutechreOneSquare(squareType: squareType)
                                 } else {
                                     ADAutechreOneSquare(squareType: .empty)
                                 }

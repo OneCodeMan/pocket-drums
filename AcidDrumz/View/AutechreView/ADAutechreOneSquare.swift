@@ -14,14 +14,14 @@ struct ADAutechreOneSquare: View {
     @State var squareType: ADAutechreSquareType
     @State var squareColour: Color = .brown
     
-    var squareTypeToActiveColourMap: [ADAutechreSquareType: Color] = [
-        ADAutechreSquareType.kick: Color.ADAutechreKickButton,
-        ADAutechreSquareType.snare: Color.ADAutechreSnareButton,
-        ADAutechreSquareType.hat: Color.ADAutechreHatButton,
-        ADAutechreSquareType.tom: Color.ADAutechreTomButton,
-        ADAutechreSquareType.perc: Color.ADAutechrePercButton,
-        ADAutechreSquareType.ride: Color.brown,
-        ADAutechreSquareType.empty: Color.gray,
+    var squareTypeToActiveColourMap: [Int: Color] = [
+        ADAutechreSquareType.kick.rawValue: Color.ADAutechreKickButton,
+        ADAutechreSquareType.snare.rawValue: Color.ADAutechreSnareButton,
+        ADAutechreSquareType.hat.rawValue: Color.ADAutechreHatButton,
+        ADAutechreSquareType.tom.rawValue: Color.ADAutechreTomButton,
+        ADAutechreSquareType.perc.rawValue: Color.ADAutechrePercButton,
+        ADAutechreSquareType.ride.rawValue: Color.brown,
+        ADAutechreSquareType.empty.rawValue: Color.gray,
     ]
     
     var body: some View {
@@ -33,8 +33,12 @@ struct ADAutechreOneSquare: View {
                 isSelected.toggle()
             }
             .task {
-                if let realColour = squareTypeToActiveColourMap[squareType] {
+                if let realColour = squareTypeToActiveColourMap[squareType.rawValue] {
                     squareColour = realColour
+                    print(realColour.description)
+                } else {
+                    print("not real colour")
+                    print(squareType.rawValue)
                 }
                 
             }
