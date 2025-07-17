@@ -33,7 +33,7 @@ struct ADSquarePusherView: View {
                
                // MARK: Menu
                // TODO: put this in a context menu
-               HStack {
+               HStack(spacing: 20) {
                    // this is where the last kit is selected for appstorage
                    VStack {
                        Text("Kit")
@@ -45,9 +45,7 @@ struct ADSquarePusherView: View {
                        }
                        .pickerStyle(.menu)
                    }
-                   
-                   Spacer()
-                       .frame(width: 70)
+                   .padding(1)
                    
                    VStack {
                        Text("FX")
@@ -59,6 +57,7 @@ struct ADSquarePusherView: View {
                        }
                        .pickerStyle(.menu)
                    }
+                   .padding(1)
                    
                    
 

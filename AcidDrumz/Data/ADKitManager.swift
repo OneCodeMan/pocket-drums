@@ -210,8 +210,16 @@ struct ADKitManager {
     static let loopkit1: ADSoundPack = ADSoundPack(sounds: loopspack1_sounds, title: "Loops", internalTitle: "loops")
     static let loopspack1_sounds = [
         ADOneShotSound(name: "loop1", fileString: "FX_ VIDEOSPIELE"),
-        
     ]
+    
+    static var customKit1 = ADSoundPack(sounds: customKitSounds, title: "Custom Kit", internalTitle: "Custom Drums")
+    static var customKitSounds = [
+        ADOneShotSound(name: "kick", fileString: "tr-808-bd-kick-01"),
+    ]
+    
+    func handleCustomKit() {
+        
+    }
     
     // MARK: sounds
     static let tr808_sounds = [
