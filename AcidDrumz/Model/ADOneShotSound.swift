@@ -11,17 +11,20 @@ import SwiftUI
 /**
     One shot sound struct containing name of sound (what will be displayed on button) and file string of sound path.
  */
-struct ADOneShotSound: Hashable {
+struct ADOneShotSound: Hashable, Codable, Identifiable, Equatable {
     var id = UUID()
     var name: String
     var fileString: String
-    var activeColour: Color = .brown
+    var activeColourName: String = "brown"  // Instead of Color directly
+        
+    var activeColour: Color {
+        Color(activeColourName)
+    }
     
     init(name: String, fileString: String) {
         self.name = name
         self.fileString = fileString
-        
-        determineActiveColour()
+        self.activeColourName = ADOneShotSound.getColourName(for: name)
     }
     
     init() {
@@ -30,17 +33,18 @@ struct ADOneShotSound: Hashable {
     }
     
     // MARK: Helpers
-    private mutating func determineActiveColour() {
-        if self.name.contains("chat") {
-            self.activeColour = .ADOneShotGambogeTapState
-        } else if self.name.contains("tom") {
-            self.activeColour = .ADOneShotDiscoVioletTapState
-        } else if self.name.contains("kick") {
-            self.activeColour = .ADOneShotSoirBleuTapState
-        } else if self.name.contains("snare") {
-            self.activeColour = .ADOneShotGreenTapState
+    // Helper to determine color name
+    private static func getColourName(for name: String) -> String {
+        if name.contains("chat") {
+            return "gamboge"
+        } else if name.contains("tom") {
+            return "violet"
+        } else if name.contains("kick") {
+            return "blue"
+        } else if name.contains("snare") {
+            return "green"
         } else {
-            self.activeColour = .ADOneShotPurpleTapState
+            return "purple"
         }
     }
 }

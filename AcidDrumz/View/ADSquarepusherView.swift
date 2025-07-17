@@ -9,6 +9,7 @@ import AVFoundation
 import ReplayKit
 
 struct ADSquarePusherView: View {
+    @StateObject private var storage = ADArrayStorage<ADItemWrapper>(key: "customKit", defaultValue: [])
     @AppStorage("selectedKitID") var selectedKitID: String?
     
     @State var player: AVAudioPlayer?

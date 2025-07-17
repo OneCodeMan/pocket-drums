@@ -8,7 +8,43 @@
 import Foundation
 import SwiftUI
 
-struct ADKitManager {
+class ADKitStorage: ObservableObject {
+    @Published var customKit: [ADOneShotSound] {
+        didSet {
+            saveCustomKit()
+        }
+    }
+
+    private let key = "customKit"
+
+    init() {
+        if let data = UserDefaults.standard.data(forKey: key),
+           let decoded = try? JSONDecoder().decode([ADOneShotSound].self, from: data) {
+            self.customKit = decoded
+        } else {
+            self.customKit = []
+        }
+    }
+
+    func saveCustomKit() {
+        if let data = try? JSONEncoder().encode(customKit) {
+            UserDefaults.standard.set(data, forKey: key)
+        }
+    }
+
+    func updateKit(with fileStrings: [String]) {
+        // Build new kit from your master lists
+        let allSounds = ADKitManager.master_lists.flatMap { $0 }
+        self.customKit = allSounds.filter { fileStrings.contains($0.fileString) }
+    }
+}
+
+
+final class ADKitManager {
+    
+    static let shared = ADKitManager()
+    
+    let storage = ADKitStorage()
     
     // TODO: build your own kit
     static let master_lists = [
@@ -217,8 +253,8 @@ struct ADKitManager {
         ADOneShotSound(name: "kick", fileString: "tr-808-bd-kick-01"),
     ]
     
-    func handleCustomKit() {
-        
+    func handleCustomKit(kit: [String] = []) {
+        storage.updateKit(with: kit)
     }
     
     // MARK: sounds
