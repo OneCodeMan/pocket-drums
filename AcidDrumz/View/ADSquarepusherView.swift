@@ -32,6 +32,8 @@ struct ADSquarePusherView: View {
        ZStack {
            ScrollView {
                
+               ADMasterSampsListView(samps: ADKitManager.master_kickz)
+               
                // MARK: Menu
                // TODO: put this in a context menu
                HStack(spacing: 20) {
