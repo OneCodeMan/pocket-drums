@@ -16,6 +16,7 @@ struct ADSquarePusherView: View {
     @State var selectedKitString: String
     @State private var selectedKit: ADSoundPack = ADKitManager.tr808_kit
     @State private var selectedFX: ADSoundPack = ADKitManager.fxpack1_kit
+    @State private var selectedLoops: ADSoundPack = ADKitManager.loopkit1
     let recorder = RPScreenRecorder.shared()
     @State private var isRecording = false
     @State private var isShowPreviewVideo = false
@@ -77,6 +78,16 @@ struct ADSquarePusherView: View {
                LazyVGrid(columns: columns, spacing: 10) {
                    ForEach(selectedFX.sounds, id: \.self) { item in
                        ADOneShotFXView(item: item)
+                   }
+               }
+               .padding(.top, 12)
+               .padding(.horizontal)
+               
+               Divider()
+               
+               LazyVGrid(columns: columns, spacing: 10) {
+                   ForEach(selectedLoops.sounds, id: \.self) { item in
+                       ADOneShotLoopView(item: item)
                    }
                }
                .padding(.top, 12)
